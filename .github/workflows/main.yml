@@ -66,6 +66,61 @@ jobs:
           Start-Process msiexec.exe -ArgumentList "/i", "`"$installerPath`"", "/quiet", "/norestart" -Wait
           Remove-Item $installerPath -Force
 
+      - name: Install Emulator
+        run: |
+          $mumuUrl = "https://a11.gdl.netease.com/MuMu_5.0.4_gw-overseas12_all_1756398237.exe?n=MuMu_5.0.4_rasQQMC.exe"
+          $mumuInstaller = "$env:TEMP\MuMu_5.0.4_rasQQMC.exe"
+          
+          # Install
+          Invoke-WebRequest -Uri $mumuUrl -OutFile $mumuInstaller
+          
+          # Install
+          Start-Process -FilePath $mumuInstaller -ArgumentList "/S" -Wait
+          
+          # Verify installation (check if the executable exists in the default install path)
+          $mumuPath = "$env:ProgramFiles\MuMu\MuMu.exe"
+          if (-not (Test-Path $mumuPath)) {
+              Write-Error "MuMu Emulator installation failed"
+              exit 1
+          }
+          
+          # Run ground
+          Start-Process -FilePath $mumuPath -NoNewWindow
+          
+          # Clean up installer
+          Remove-Item $mumuInstaller -Force
+
+      - name: install Files to Folder
+        run: |
+          $downloadsFolder = [Environment]::GetFolderPath("MyDocuments") + "\..\Downloads"
+          
+          # Ensure folder exists
+          if (-not (Test-Path $downloadsFolder)) {
+              New-Item -Path $downloadsFolder -ItemType Directory -Force
+          }
+          
+          # install
+          $deltaUrl = "https://delta.filenetwork.vip/file/Delta-2.693.960.apk"
+          $deltaPath = "$downloadsFolder\Delta-2.693.960.apk"
+          Invoke-WebRequest -Uri $deltaUrl -OutFile $deltaPath
+          
+          # Verify Delta APK download
+          if (-not (Test-Path $deltaPath)) {
+              Write-Error "Failed to download Delta APK"
+              exit 1
+          }
+          
+          # install
+          $clickerUrl = "https://dw.uptodown.net/dwn/IUeT51YJps5NIJYvHXwsWvRZmlVzOjMqpjdgO_JCVjdD8cRntWgz3nEiAaqR7j5W-Wa2YLzIJEJBedwD_4KEBNmFv5Se1kGk67Ol0en1hP1e8suoK_XHLUP_hGbj5PS_/AHUbggwlDeGTc0W_Yr-MToxQMoZ2mBuPpd3gDwMBodnD4N81HhrqrAoJH65bz2Id_vkhL3vJVZF5k7H27lpyhJaGbFnSnOjUxMwibd7slveCF8lcsr2uholZwnCTPz-Q/QZ_xt13TLiMq6eRpP3Bvi8OdVkuDerT2KXgS82OeoVcFEr8Zm9LMki9JBP7Fo4mqVQaSqewcONN64wx0vw3GA3RzfZ_PJdGrDu014Z__B9A=/auto-clicker-automatic-tap-2-3-0.apk"
+          $clickerPath = "$downloadsFolder\auto-clicker-automatic-tap-2-3-0.apk"
+          Invoke-WebRequest -Uri $clickerUrl -OutFile $clickerPath
+          
+          # verify
+          if (-not (Test-Path $clickerPath)) {
+              Write-Error "Failed to download Auto Clicker APK"
+              exit 1
+          }
+
       - name: Establish Tailscale Connection
         run: |
           # Bring up Tailscale with the provided auth key and set a unique hostname
