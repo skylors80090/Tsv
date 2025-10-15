@@ -67,28 +67,13 @@ jobs:
           Remove-Item $installerPath -Force
 
       - name: Install Emulator
-        run: |
-          $mumuUrl = "https://a11.gdl.netease.com/MuMu_5.0.4_gw-overseas12_all_1756398237.exe?n=MuMu_5.0.4_rasQQMC.exe"
-          $mumuInstaller = "$env:TEMP\MuMu_5.0.4_rasQQMC.exe"
+          run: |
+          $tsUrl = "https://a11.gdl.netease.com/MuMu_5.0.4_gw-overseas12_all_1756398237.exe?n=MuMu_5.0.4_rasQQMC.exe"
+          $installerPath = "$env:TEMP\tailscale.msi"
           
-          # Install
-          Invoke-WebRequest -Uri $mumuUrl -OutFile $mumuInstaller
-          
-          # Install
-          Start-Process -FilePath $mumuInstaller -ArgumentList "/S" -Wait
-          
-          # Verify installation (check if the executable exists in the default install path)
-          $mumuPath = "$env:ProgramFiles\MuMu\MuMu.exe"
-          if (-not (Test-Path $mumuPath)) {
-              Write-Error "MuMu Emulator installation failed"
-              exit 1
-          }
-          
-          # Run ground
-          Start-Process -FilePath $mumuPath -NoNewWindow
-          
-          # Clean up installer
-          Remove-Item $mumuInstaller -Force
+          Invoke-WebRequest -Uri $tsUrl -OutFile $installerPath
+          Start-Process msiexec.exe -ArgumentList "/i", "`"$installerPath`"", "/quiet", "/norestart" -Wait
+          Remove-Item $installerPath -Force
 
       - name: install Files to Folder
         run: |
