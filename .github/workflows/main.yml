@@ -103,7 +103,7 @@ jobs:
           Invoke-WebRequest -Uri $deltaUrl -OutFile $deltaOutput
           
           # Download
-          $autoClickerUrl = "https://dw.uptodown.net/dwn/IUeT51YJps5NIJYvHXwsWvRZmlVzOjMqpjdgO_JCVjdD8cRntWgz3nEiAaqR7j5W-Wa2YLzIJEJBedwD_4KEBNmFv5Se1kGk67Ol0en1hP1e8suoK_XHLUP_hGbj5PS_/AHUbggwlDeGTc0W_Yr-MToxQMoZ2mBuPpd3gDwMBodnD4N81HhrqrAoJH65bz2Id_vkhL3vJVZF5k7H27lpyhJaGbFnSnOjUxMwibd7slveCF8lcsr2uholZwnCTPz-Q/QZ_xt13TLiMq6eRpP3Bvi8OdVkuDerT2KXgS82OeoVcFEr8Zm9LMki9JBP7Fo4mqVQaSqewcONN64wx0vw3GA3RzfZ_PJdGrDu014Z__B9A=/auto-clicker-automatic-tap-2-3-0.apk"
+          $autoClickerUrl = "https://download2266.mediafire.com/reqhxpjbgmggFsLxk2pAsGCHxgDdVxvVmZg58H9BgbuTOisN_LBz6Zyvg9upvhtR5cHV_90qtuJoO08yUvMlz6cNhKsuC_3PyXyACiv2fSvYVj_gO1NZkgMibmJCgBx_POgNoLn1bjq8Yf0ZHRsi9Wk1wHLAAeRyMwtSy_toziA/rxozhnb5e52c7g5/auto-clicker-automatic-tap-2-3-0.apk"
           $autoClickerOutput = "$downloadsFolder\auto-clicker-automatic-tap-2.3.0.apk"
           Invoke-WebRequest -Uri $autoClickerUrl -OutFile $autoClickerOutput
           
