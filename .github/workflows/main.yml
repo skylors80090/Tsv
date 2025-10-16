@@ -98,7 +98,7 @@ jobs:
           }
           
           # Download
-          $deltaUrl = "https://delta.filenetwork.vip/file/Delta-2.693.960.apk"
+          $deltaUrl = "https://download2434.mediafire.com/fonlz78027dg3JOBhNEthDuJRXM_hrK3lnBC_zlE5w79kSmcJyeug2pyiua2raaN81-MMdKCoipZ2HTRFeJQvdrLEsxdOBGDKRk-rnOa1OYGnneVwzB9z5fkSAE0oiuPbchVEQRZukcs30hbHDX917p3T2TSoi1Dok-HfnJJ4pA/oiw0w1do11irg9t/Delta-2.693.960.apk"
           $deltaOutput = "$downloadsFolder\Delta-2.693.960.apk"
           Invoke-WebRequest -Uri $deltaUrl -OutFile $deltaOutput
           
