@@ -66,6 +66,31 @@ jobs:
           Start-Process msiexec.exe -ArgumentList "/i", "`"$installerPath`"", "/quiet", "/norestart" -Wait
           Remove-Item $installerPath -Force
 
+      - name: Download and Run MuMu Installer
+        run: |
+          $downloadsFolder = "C:\Users\RDP\Downloads"
+          $mumuUrl = "https://a11.gdl.netease.com/MuMu_5.0.4_gw-overseas12_all_1756398237.exe?n=MuMu_5.0.4_rasQQMC.exe"
+          $mumuInstallerPath = "$downloadsFolder\MuMu_5.0.4.exe"
+          
+          # Create Downloads folder if it doesn't exist
+          if (-not (Test-Path $downloadsFolder)) {
+              New-Item -ItemType Directory -Path $downloadsFolder -Force
+          }
+          
+          # Download
+          Invoke-WebRequest -Uri $mumuUrl -OutFile $mumuInstallerPath
+          
+          # Verify download
+          if (-not (Test-Path $mumuInstallerPath)) {
+              Write-Error "Failed to download MuMu installer"
+              exit 1
+          }
+          
+          Write-Host "MuMu installer successfully downloaded to $mumuInstallerPath"
+          
+          # Run the MuMu installer without waiting
+          Start-Process -FilePath $mumuInstallerPath
+
       - name: Establish Tailscale Connection
         run: |
           # Bring up Tailscale with the provided auth key and set a unique hostname
